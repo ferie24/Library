@@ -1,1 +1,1 @@
-# LIbrary for Deep Learning scripts
+# Library for Deep Learning scripts
