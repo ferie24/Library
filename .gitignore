@@ -12,6 +12,9 @@
 *.pickle
 *.zip
 *.tar.gz
+# FOR CIFAR 10
+*.html
+*.meta
 
 # Ignore model files
 *.h5
