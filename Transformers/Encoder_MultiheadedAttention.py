@@ -13,19 +13,25 @@ class Attention(nn.Module):
         self.softmax = nn.Softmax(dim=-1)
 
     def forward(self, x): 
+        #print("X: ", x.size())
         scores = self.K(x) @ self.Q(x).transpose(-2, -1)
+        #print("scores: ", scores.size())
         att_weight = self.softmax(scores / np.sqrt(x.shape[-1]))
+        #print("att_weight", att_weight.size())
         out = att_weight @ self.V(x)
+        #print("out weight: ", out.size())
         return out
 
 class MultiHeadAttention(nn.Module): 
     def __init__(self, dim, head_size, num_heads): 
         super(MultiHeadAttention, self).__init__()
         self.heads = nn.ModuleList(Attention(dim) for _ in range(num_heads))
-        self.Z = nn.Linear(num_heads * head_size, dim)
+        self.Z = nn.Linear(num_heads * dim, dim)
 
     def forward(self, x): 
+        #print(x.size())
         out = torch.cat([head(x) for head in self.heads], dim=-1)
+        #print(out.size())
         return self.Z(out)
     
 class PositionalEncoding(nn.Module):
